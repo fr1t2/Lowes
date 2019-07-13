@@ -9,7 +9,7 @@ import time
 with open("storesall.txt") as s:
     data = []
     for store in map(str.strip, s):
-        url = "https://www.lowes.com/pd/search/999919858/pricing/{}".format(store)
+        url = "https://www.lowes.com/pd/search/1000216973/pricing/{}".format(store)
         response = requests.get(url, timeout=None)
         soup = BeautifulSoup(response.content, "html.parser")
         jstext = soup.find('script', type="text/javascript").text

@@ -15,12 +15,11 @@ with open("storesall.txt") as s:
         jstext = soup.find('script', type="text/javascript").text
         pricesearch = re.search(r'\d+[.]\d*', jstext)
         price = pricesearch.group()
+	
         temp_dict = {'price': price}
         temp_dict = {'store': store}
-		
 
         temp_dict['price'] = price
-
 
         print(temp_dict.items())
 

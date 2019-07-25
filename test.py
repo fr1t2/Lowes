@@ -19,7 +19,9 @@ with open("productList.txt") as p:
                 response = requests.get(url, timeout=None)
                 soup = BeautifulSoup(response.content, "html.parser")
                 jstext = soup.find('script', type="text/javascript").text
+                print (jstext)
                 pricesearch = re.search(r'\d+[.]\d*', jstext)
+                print ("pricesearch".pricesearch)
                 if pricesearch:
                     price = pricesearch.group()
                     temp_dict = {'price': price}

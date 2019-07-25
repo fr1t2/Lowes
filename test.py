@@ -15,11 +15,9 @@ with open("productList.txt") as p:
             for store in map(str.strip, s):
                 print (store)
                 url = "https://www.lowes.com/pd/search/{}/pricing/{}".format(item, store)
-                print (url)
                 response = requests.get(url, timeout=None)
                 soup = BeautifulSoup(response.content, "html.parser")
                 jstext = soup.find('script', type="text/javascript").text
-                print (jstext)
                 pricesearch = re.search(r'\d+[.]\d*', jstext)
                 print ("pricesearch".pricesearch)
                 if pricesearch:

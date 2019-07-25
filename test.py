@@ -30,6 +30,16 @@ with open("productList.txt") as p:
                 else:
                    print(store, " Not Found...")
 
+
+
+
+
+## MOVE THIS INTO THE FOR LOOP FOR EACH ITEM TO SPIT OUT MULTIPLE FILES!!!
+
+
+
+
+
 #this saves the results once the loop is done to results.csv
 with open('Test_results.csv', 'w') as outfile:
     f = csv.DictWriter(outfile, ['item', 'store', 'price'],

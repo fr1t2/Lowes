@@ -31,8 +31,8 @@ with open("productList.txt") as p:
                    print(store, " Not Found...")
 
 #this saves the results once the loop is done to results.csv
-with open('results.csv', 'w') as outfile:
-    f = csv.DictWriter(outfile, ['store', 'price'],
+with open('Test_results.csv', 'w') as outfile:
+    f = csv.DictWriter(outfile, ['item', 'store', 'price'],
                        delimiter=',', lineterminator='\n')
     f.writeheader()
     f.writerows(data)
@@ -42,7 +42,7 @@ with open('results.csv', 'w') as outfile:
 #2)removes any blank lines (lines that dont have a price)
 #3)sorts by price (low to high)
 #4)output is saved as LowesResultsAll.csv, overwriting any existing file.
-first = pd.read_csv('results.csv')
+first = pd.read_csv('Test_results.csv')
 second = pd.read_csv('allstores.csv')
 
 first = first[pd.notnull(first['price'])]
@@ -51,4 +51,4 @@ first.sort_values(["price"], inplace=True, ascending=True)
 
 merged = pd.merge(first, second, how='left', on='store')
 
-merged.to_csv('LowesResultsAll.csv', index=False)
+merged.to_csv('Test_LowesResultsAll.csv', index=False)

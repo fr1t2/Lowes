@@ -21,7 +21,6 @@ with open("productList.txt") as p:
                 soup = BeautifulSoup(response.content, "html.parser")
                 jstext = soup.find('script', type="text/javascript").text
                 pricesearch = re.search(r'\d+[.]\d*', jstext)
-                qtysearch = re.search(r'\d+[:]\d*', jstext)
                 if pricesearch:
                     price = pricesearch.group()
                     temp_dict = {'price': price}
@@ -29,12 +28,6 @@ with open("productList.txt") as p:
                     temp_dict = {'store': store}
                     temp_dict['price'] = price
                     temp_dict['item'] = item
-                    if qtysearch:
-                        qty = qtysearch.group()
-                        temp_dict = {'qty': qty}
-                        temp_dict['qty'] = qty
-                    else
-                        print(item, store, " None available..")
                     print(temp_dict.items())
                     data.append(temp_dict)
                 else:
@@ -44,7 +37,7 @@ with open("productList.txt") as p:
             f = csv.DictWriter(outfile, ['item', 'store', 'price'],
                             delimiter=',', lineterminator='\n')
             f.writeheader()
-            f.writerows(data) # may be an error, and need to remove the productNum here
+            f.writerows(data) 
         #This takes the results and:
         #1)adds store info (city, state, zip, etc)
         #2)removes any blank lines (lines that dont have a price)

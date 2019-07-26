@@ -25,40 +25,25 @@ with open("productList.txt") as p:
                     temp_dict = {'item': item}
                     temp_dict = {'store': store}
                     temp_dict['price'] = price
+                    temp_dict['item'] = item
                     print(temp_dict.items())
                     data.append(temp_dict)
                 else:
                    print(store, " Not Found...")
-
-
-
-
-
-## MOVE THIS INTO THE FOR LOOP FOR EACH ITEM TO SPIT OUT MULTIPLE FILES!!!
-
-
-
-
-
-#this saves the results once the loop is done to results.csv
-with open('Test_results.csv', 'w') as outfile:
-    f = csv.DictWriter(outfile, ['item', 'store', 'price'],
-                       delimiter=',', lineterminator='\n')
-    f.writeheader()
-    f.writerows(data)
-
-#This takes the results and:
-#1)adds store info (city, state, zip, etc)
-#2)removes any blank lines (lines that dont have a price)
-#3)sorts by price (low to high)
-#4)output is saved as LowesResultsAll.csv, overwriting any existing file.
-first = pd.read_csv('Test_results.csv')
-second = pd.read_csv('allstores.csv')
-
-first = first[pd.notnull(first['price'])]
-
-first.sort_values(["price"], inplace=True, ascending=True)  
-
-merged = pd.merge(first, second, how='left', on='store')
-
-merged.to_csv('Test_LowesResultsAll.csv', index=False)
+        #this saves the results once the loop is done to results.csv
+        with open('{}_results.csv'.format(item), 'w') as outfile:
+            f = csv.DictWriter(outfile, ['item', 'store', 'price'],
+                            delimiter=',', lineterminator='\n')
+            f.writeheader()
+            f.writerows(data)
+        #This takes the results and:
+        #1)adds store info (city, state, zip, etc)
+        #2)removes any blank lines (lines that dont have a price)
+        #3)sorts by price (low to high)
+        #4)output is saved as LowesResultsAll.csv, overwriting any existing file.
+        first = pd.read_csv('{}_results.csv'.format(item))
+        second = pd.read_csv('allstores.csv')
+        first = first[pd.notnull(first['price'])]
+        first.sort_values(["price"], inplace=True, ascending=True)  
+        merged = pd.merge(first, second, how='left', on='store')
+        merged.to_csv('{}_LowesResultsAll.csv'.format(item), index=False)

@@ -9,22 +9,20 @@ import time
 with open("storesall.txt") as s:
     data = []
     for store in map(str.strip, s):
-        url = "https://www.lowes.com/pd/search/999919858/pricing/{}".format(store)
+        url = "https://www.lowes.com/pd/search/1208105/pricing/{}".format(store)
         response = requests.get(url, timeout=None)
         soup = BeautifulSoup(response.content, "html.parser")
         jstext = soup.find('script', type="text/javascript").text
         pricesearch = re.search(r'\d+[.]\d*', jstext)
-        price = pricesearch.group()
-        temp_dict = {'price': price}
-        temp_dict = {'store': store}
-		
-
-        temp_dict['price'] = price
-
-
-        print(temp_dict.items())
-
-        data.append(temp_dict)
+        if pricesearch:
+            price = pricesearch.group()
+            temp_dict = {'price': price}
+            temp_dict = {'store': store}
+            temp_dict['price'] = price
+            print(temp_dict.items())
+            data.append(temp_dict)
+        else:
+           print(store, " Not Found...")
 
 #this saves the results once the loop is done to results.csv
 with open('results.csv', 'w') as outfile:
